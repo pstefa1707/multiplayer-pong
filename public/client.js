@@ -91,3 +91,19 @@ document.addEventListener('keydown', function(event) {
 		}
 	}
 });
+
+//Mouse
+$('#drawing-canvas').mousemove(function(e) {
+	let mouse_pos = getMousePos(e);
+	game_state.game.self.pos =
+		(mouse_pos.y / document.getElementById('drawing-canvas').height) * 100;
+});
+
+function getMousePos(evt) {
+	let canvas = document.getElementById('drawing-canvas');
+	var rect = canvas.getBoundingClientRect();
+	return {
+		x: evt.clientX - rect.left,
+		y: evt.clientY - rect.top
+	};
+}

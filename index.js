@@ -1,6 +1,7 @@
 var express = require('express');
 var Game = require('./Game');
 var app = express();
+const HERTZ = 30; //Game updates per second
 const port = process.env.PORT || 80;
 var server = require('http')
 	.createServer(app)
@@ -150,4 +151,4 @@ setInterval(() => {
 			}
 		);
 	}
-}, (1 / 15) * 1000);
+}, (1 / HERTZ) * 1000);
