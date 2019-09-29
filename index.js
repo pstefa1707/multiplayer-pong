@@ -68,7 +68,11 @@ io.on('connection', socket => {
 		}
 		for (key in games) {
 			let game = games[key];
-			if (game.player1 == socket.id || game.player2 == socket.id) {
+			if (game.player1 == socket.id) {
+				users[game.player2].socket.emit('player-left');
+				delete games[key];
+			} else if (game.player2 == socket.id) {
+				users[game.player1].socket.emit('player-left');
 				delete games[key];
 			}
 		}

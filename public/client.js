@@ -31,7 +31,8 @@ socket.on('game-started', data => {
 		game_state.update();
 	}, (1 / 60) * 1000);
 	document.getElementById('match-making').remove();
-	document.getElementById('gameplay').style.display = 'block';
+	document.getElementById('gameplay').style.display = 'flex';
+	fit_canvas();
 });
 
 //Gets new game data and mutates gamestate
@@ -47,6 +48,16 @@ socket.on('game-data', (data, callback) => {
 socket.on('matchmaking-begin', () => {
 	document.getElementById('match-making').style.display = 'block';
 });
+
+window.addEventListener('resize', fit_canvas);
+
+//Fit canvas
+function fit_canvas() {
+	let canvas = document.getElementById('drawing-canvas');
+	let parent = document.getElementById('gameplay');
+	canvas.height = parent.offsetHeight - 10;
+	canvas.width = parent.offsetWidth - 10;
+}
 
 //Sends username to server
 function setUsername() {
@@ -64,11 +75,16 @@ function setUsername() {
 	);
 }
 
+//Handles opponent leaving game
+socket.on('player-left', () => {
+	socket.disconnect();
+	document.location.reload();
+});
+
 //Controls
 document.addEventListener('keydown', function(event) {
 	if (game_state != null) {
 		if (event.keyCode == 38 || event.keyCode == 87) {
-			console.log('uP!');
 			game_state.up();
 		} else if (event.keyCode == 40 || event.keyCode == 83) {
 			game_state.down();

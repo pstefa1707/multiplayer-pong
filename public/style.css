@@ -6,7 +6,9 @@ body {
 }
 
 h1 {
-	font-size: 100px;
+	margin: 0;
+	height: 10vh;
+	font-size: 50px;
 	text-align: center;
 }
 
@@ -53,5 +55,12 @@ h1 {
 }
 
 #gameplay {
-	text-align: center;
+	position: relative;
+	background: blue;
+	height: 90vh;
+	width: 100%;
+}
+
+#drawing-canvas {
+	border: 5px white solid;
 }

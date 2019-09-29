@@ -56,10 +56,10 @@ class Pong {
 	}
 
 	up() {
-		this.game.self.pos -= 3;
+		if (this.game.self.pos > 10) this.game.self.pos -= 3;
 	}
 
 	down() {
-		this.game.self.pos += 3;
+		if (this.game.self.pos < 90) this.game.self.pos += 3;
 	}
 }
