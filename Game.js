@@ -38,16 +38,16 @@ class Game {
 			this.ball[0] > 94 &&
 			this.ball[0] < 96.5
 		) {
-			this.ball_velocity[0] *= -1 + (Math.random() * 0.3 - 0.15);
-			this.ball_velocity[1] *= -1 + (Math.random() * 0.3 - 0.15);
+			this.ball_velocity[0] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
+			this.ball_velocity[1] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
 		} else if (
 			this.ball[1] < this.players[this.player1].pos + 10 &&
 			this.ball[1] > this.players[this.player1].pos - 10 &&
 			this.ball[0] < 6 &&
 			this.ball[0] > 3.5
 		) {
-			this.ball_velocity[0] *= -1 + (Math.random() * 0.3 - 0.15);
-			this.ball_velocity[1] *= -1 + (Math.random() * 0.3 - 0.15);
+			this.ball_velocity[0] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
+			this.ball_velocity[1] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
 		}
 	}
 
