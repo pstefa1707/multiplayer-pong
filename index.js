@@ -1,9 +1,10 @@
 var express = require('express');
 var Game = require('./Game');
 var app = express();
+const port = process.env.PORT || 80;
 var server = require('http')
 	.createServer(app)
-	.listen(80);
+	.listen(port);
 var io = require('socket.io')(server);
 
 app.use(express.static(__dirname + '/node_modules'));
