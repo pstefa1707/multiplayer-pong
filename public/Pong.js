@@ -24,7 +24,7 @@ class Pong {
 		if (this.game.player == 1) {
 			this.ctx.fillStyle = '#0000ff';
 			this.ctx.fillText(
-				this.game.self.username,
+				`${this.game.self.username}: ${this.game.self.score}`,
 				this.canvas.width / 4,
 				25
 			);
@@ -36,7 +36,7 @@ class Pong {
 			);
 			this.ctx.fillStyle = '#ff0000';
 			this.ctx.fillText(
-				this.game.opp.username,
+				`${this.game.opp.username}: ${this.game.opp.score}`,
 				3 * (this.canvas.width / 4),
 				25
 			);
@@ -49,7 +49,7 @@ class Pong {
 		} else {
 			this.ctx.fillStyle = '#ff0000';
 			this.ctx.fillText(
-				this.game.opp.username,
+				`${this.game.opp.username}: ${this.game.opp.score}`,
 				this.canvas.width / 4,
 				25
 			);
@@ -62,7 +62,7 @@ class Pong {
 
 			this.ctx.fillStyle = '#0000ff';
 			this.ctx.fillText(
-				this.game.self.username,
+				`${this.game.self.username}: ${this.game.self.score}`,
 				3 * (this.canvas.width / 4),
 				25
 			);
