@@ -52,7 +52,7 @@ class Game {
 
 	reset() {
 		this.ball = [50, 50];
-		this.ball_velocity = [Math.random() * 1.5, Math.random() * 1.5];
+		this.ball_velocity = [Math.random() * 1.5 + 1, Math.random() * 1.5 + 1];
 	}
 }
 
