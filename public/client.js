@@ -2,51 +2,53 @@ var host = window.location.href;
 console.log(host);
 var socket = io.connect(host);
 
+let game_state;
+
+//Changes text on searching for match page
 let i = '';
-const interval = setInterval(() => {
+let interval = setInterval(() => {
 	document.getElementById('searching-for-match').innerHTML =
 		'Searching for Match' + i;
 	i += '.';
 	if (i == '.....') i = '';
 }, 500);
 
+//Gets number of online players
 socket.on('player-broadcast', players => {
 	document.getElementById('online-players').innerHTML = `Online: ${players}`;
 });
 
-socket.on('game-started', () => {
+//Game has begun
+socket.on('game-started', data => {
 	clearInterval(interval);
+	game_state = new Pong(
+		data.username,
+		data.player,
+		data.opp_username,
+		data.ball
+	);
+	interval = setInterval(() => {
+		game_state.update();
+	}, (1 / 60) * 1000);
 	document.getElementById('match-making').remove();
-});
-
-socket.on('game-data', data => {
-	let height = 5;
-	let width = 6;
 	document.getElementById('gameplay').style.display = 'block';
-	var canvas = document.getElementById('drawing-canvas');
-	var ctx = canvas.getContext('2d');
-	ctx.fillStyle = '#FFFFFF';
-	ctx.fillRect(0, 0, 600, 500);
-	ctx.fillStyle = '#000000';
-	ctx.fillRect(data.ball[0] * width, data.ball[1] * height, 10, 10);
-	ctx.fillRect(
-		5 * width,
-		(data.players[data.player1].pos - 10) * height,
-		1 * width,
-		20 * height
-	);
-	ctx.fillRect(
-		95 * width,
-		(data.players[data.player2].pos - 10) * height,
-		1 * width,
-		20 * height
-	);
 });
 
+//Gets new game data and mutates gamestate
+socket.on('game-data', (data, callback) => {
+	game_state.game.self.score = data.score;
+	game_state.game.opp.score = data.opp_score;
+	game_state.game.ball = data.ball;
+	game_state.game.opp.pos = data.opp_pos;
+	callback(game_state.game.self.pos);
+});
+
+//Makes matchmaking div visible
 socket.on('matchmaking-begin', () => {
 	document.getElementById('match-making').style.display = 'block';
 });
 
+//Sends username to server
 function setUsername() {
 	socket.emit(
 		'set-username',
@@ -64,9 +66,12 @@ function setUsername() {
 
 //Controls
 document.addEventListener('keydown', function(event) {
-	if (event.keyCode == 38 || event.keyCode == 87) {
-		socket.emit('movement', 'up');
-	} else if (event.keyCode == 40 || event.keyCode == 83) {
-		socket.emit('movement', 'down');
+	if (game_state != null) {
+		if (event.keyCode == 38 || event.keyCode == 87) {
+			console.log('uP!');
+			game_state.up();
+		} else if (event.keyCode == 40 || event.keyCode == 83) {
+			game_state.down();
+		}
 	}
 });

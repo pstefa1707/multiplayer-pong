@@ -2,7 +2,6 @@ const uuid = require('uuid');
 
 class Game {
 	constructor(id, username, id2, username2) {
-		this.player_velocity = 5;
 		this.id = uuid.v4();
 		this.player1 = id;
 		this.player2 = id2;
@@ -49,14 +48,6 @@ class Game {
 			this.ball_velocity[0] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
 			this.ball_velocity[1] *= -1 + (Math.random() * (0.3 - 0.15) - 0.15);
 		}
-	}
-
-	up(id) {
-		this.players[id].pos -= this.player_velocity;
-	}
-
-	down(id) {
-		this.players[id].pos += this.player_velocity;
 	}
 
 	reset() {

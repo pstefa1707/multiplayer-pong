@@ -68,19 +68,8 @@ io.on('connection', socket => {
 		}
 		for (key in games) {
 			let game = games[key];
-			if (game.player1.id == socket.id || game.player2.id == socket.id) {
-				games.splice(games.indexOf(game), 1);
-			}
-		}
-	});
-
-	//Moves player if in game
-	socket.on('movement', direction => {
-		if (users[socket.id].game.playing) {
-			if (direction == 'up') {
-				games[users[socket.id].game.id].up(socket.id);
-			} else if (direction == 'down') {
-				games[users[socket.id].game.id].down(socket.id);
+			if (game.player1 == socket.id || game.player2 == socket.id) {
+				delete games[key];
 			}
 		}
 	});
@@ -99,8 +88,17 @@ function matchMaker(new_player) {
 		users[new_player].game.id = game.id;
 		users[matchmaking[0]].game.playing = true;
 		users[new_player].game.playing = true;
-		users[matchmaking[0]].socket.emit('game-started');
-		users[new_player].socket.emit('game-started');
+		users[matchmaking[0]].socket.emit('game-started', {
+			username: users[matchmaking[0]].username,
+			player: 1,
+			opp_username: users[new_player].username,
+			ball: game.ball
+		});
+		users[new_player].socket.emit('game-started', {
+			username: users[new_player].username,
+			player: 2,
+			opp_username: users[matchmaking[0]].username
+		});
 		console.log(`Game ${game.id} has started.`);
 		matchmaking = [];
 	} else {
@@ -112,7 +110,40 @@ setInterval(() => {
 	for (key in games) {
 		let game = games[key];
 		game.update();
-		users[game.player2].socket.emit('game-data', game);
-		users[game.player1].socket.emit('game-data', game);
+		data = {
+			1: {
+				score: game.players[game.player1].score,
+				pos: game.players[game.player1].pos
+			},
+			2: {
+				score: game.players[game.player2].score,
+				pos: game.players[game.player2].pos
+			},
+			ball: game.ball
+		};
+		users[game.player2].socket.emit(
+			'game-data',
+			{
+				score: data[2].score,
+				opp_score: data[1].score,
+				opp_pos: data[1].pos,
+				ball: data.ball
+			},
+			callback => {
+				game.players[game.player2].pos = callback;
+			}
+		);
+		users[game.player1].socket.emit(
+			'game-data',
+			{
+				score: data[1].score,
+				opp_score: data[2].score,
+				opp_pos: data[2].pos,
+				ball: data.ball
+			},
+			callback => {
+				game.players[game.player1].pos = callback;
+			}
+		);
 	}
-}, (1 / 60) * 1000);
+}, (1 / 15) * 1000);
