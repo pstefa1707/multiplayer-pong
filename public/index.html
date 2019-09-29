@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+		/>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+	</head>
+	<body>
+		<h1>Pong</h1>
+		<h2 id="online-players">Online: 0</h2>
+		<div id="start-screen">
+			<form onsubmit="event.preventDefault(); setUsername();">
+				Username:
+				<input
+					id="input-username"
+					type="text"
+					name="username"
+					value=""
+				/>
+				<br />
+				<input
+					id="set-username"
+					type="submit"
+					value="Search for Match"
+				/>
+			</form>
+		</div>
+		<div id="match-making" style="display: none;">
+			<h3 id="searching-for-match">Searching for Match...</h3>
+		</div>
+		<div id="gameplay" style="display: none;">
+			<canvas id="drawing-canvas" width="600" height="500"></canvas>
+		</div>
+	</body>
+	<script src="/jquery/dist/jquery.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="client.js"></script>
+</html>

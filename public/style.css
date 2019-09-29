@@ -1,0 +1,53 @@
+body {
+	margin: 0;
+	background: black;
+	color: white;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+	font-size: 100px;
+	text-align: center;
+}
+
+#online-players {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 24px;
+}
+
+#start-screen {
+	position: absolute;
+	text-align: center;
+	font-size: 32px;
+	top: 50%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -250px;
+	width: 500px;
+	height: 250px;
+}
+
+#input-username[type='text'] {
+	background-color: black;
+	border: 5px solid white;
+	color: white;
+	text-align: center;
+	font-size: 32px;
+	width: 400px;
+	padding: 10px 15px;
+	border-radius: 4px;
+}
+
+#match-making {
+	position: absolute;
+	text-align: center;
+	font-size: 32px;
+	top: 50%;
+	left: 50%;
+	margin-top: -125px;
+	margin-left: -275px;
+	width: 550px;
+	height: 250px;
+}
