@@ -18,14 +18,14 @@ class User {
 	constructor(socket) {
 		this.socket = socket;
 		this.username = socket.id;
-		this.game = { 'game-id': null, 'in-game': false };
+		this.game = { id: null, playing: false };
 	}
 }
 
 //Stores all connected users
 let users = {};
 let matchmaking = [];
-let games = [];
+let games = {};
 
 //Manages sockets
 io.on('connection', socket => {
@@ -62,25 +62,43 @@ io.on('connection', socket => {
 	socket.on('disconnect', () => {
 		console.log(`Client Disconnected: ${users[socket.id].username}`);
 		delete users[socket.id];
+		socket.broadcast.emit('player-broadcast', Object.keys(users).length);
 		if (matchmaking.length != 0 && matchmaking[0] == socket.id) {
 			matchmaking = [];
 		}
-		games.forEach(game => {
+		for (key in games) {
+			let game = games[key];
 			if (game.player1.id == socket.id || game.player2.id == socket.id) {
 				games.splice(games.indexOf(game), 1);
 			}
-		});
+		}
+	});
+
+	//Moves player if in game
+	socket.on('movement', direction => {
+		if (users[socket.id].game.playing) {
+			if (direction == 'up') {
+				games[users[socket.id].game.id].up(socket.id);
+			} else if (direction == 'down') {
+				games[users[socket.id].game.id].down(socket.id);
+			}
+		}
 	});
 });
 
 function matchMaker(new_player) {
 	if (matchmaking.length != 0) {
-		var game = new Game(matchmaking[0], new_player);
-		games.push(game);
-		users[matchmaking[0]].game['game-id'] = game.id;
-		users[new_player].game['game-id'] = game.id;
-		users[matchmaking[0]].game['in-game'] = true;
-		users[new_player].game['in-game'] = true;
+		var game = new Game(
+			matchmaking[0],
+			users[matchmaking[0]].username,
+			new_player,
+			users[new_player].username
+		);
+		games[game.id] = game;
+		users[matchmaking[0]].game.id = game.id;
+		users[new_player].game.id = game.id;
+		users[matchmaking[0]].game.playing = true;
+		users[new_player].game.playing = true;
 		users[matchmaking[0]].socket.emit('game-started');
 		users[new_player].socket.emit('game-started');
 		console.log(`Game ${game.id} has started.`);
@@ -91,13 +109,10 @@ function matchMaker(new_player) {
 }
 
 setInterval(() => {
-	games.forEach(game => {
+	for (key in games) {
+		let game = games[key];
 		game.update();
-		users[game.player2.id].socket.emit('game-data', game, callback => {
-			game.player2Move(callback);
-		});
-		users[game.player1.id].socket.emit('game-data', game, callback => {
-			game.player1Move(callback);
-		});
-	});
-}, (1 / 30) * 1000);
+		users[game.player2].socket.emit('game-data', game);
+		users[game.player1].socket.emit('game-data', game);
+	}
+}, (1 / 60) * 1000);

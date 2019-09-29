@@ -20,7 +20,6 @@ socket.on('game-started', () => {
 });
 
 socket.on('game-data', data => {
-	console.log(data);
 	let height = 5;
 	let width = 6;
 	document.getElementById('gameplay').style.display = 'block';
@@ -32,14 +31,14 @@ socket.on('game-data', data => {
 	ctx.fillRect(data.ball[0] * width, data.ball[1] * height, 10, 10);
 	ctx.fillRect(
 		5 * width,
-		(data.player1.pos - 10) * height,
-		2 * width,
+		(data.players[data.player1].pos - 10) * height,
+		1 * width,
 		20 * height
 	);
 	ctx.fillRect(
-		90 * width,
-		(data.player2.pos - 10) * height,
-		2 * width,
+		95 * width,
+		(data.players[data.player2].pos - 10) * height,
+		1 * width,
 		20 * height
 	);
 });
@@ -62,3 +61,12 @@ function setUsername() {
 		}
 	);
 }
+
+//Controls
+document.addEventListener('keydown', function(event) {
+	if (event.keyCode == 38 || event.keyCode == 87) {
+		socket.emit('movement', 'up');
+	} else if (event.keyCode == 40 || event.keyCode == 83) {
+		socket.emit('movement', 'down');
+	}
+});
