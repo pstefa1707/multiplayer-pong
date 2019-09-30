@@ -49,9 +49,8 @@ socket.on('matchmaking-begin', () => {
 	document.getElementById('match-making').style.display = 'block';
 });
 
+//Fit canvas to screen on resize
 window.addEventListener('resize', fit_canvas);
-
-//Fit canvas
 function fit_canvas() {
 	let canvas = document.getElementById('drawing-canvas');
 	let parent = document.getElementById('gameplay');
@@ -82,6 +81,7 @@ socket.on('player-left', () => {
 });
 
 //Controls
+//Keyboard
 document.addEventListener('keydown', function(event) {
 	if (game_state != null) {
 		if (event.keyCode == 38 || event.keyCode == 87) {
@@ -108,7 +108,7 @@ function getMousePos(evt) {
 	};
 }
 
-//Phone
+//Mobile
 document.addEventListener('touchstart', touchHandler);
 document.addEventListener('touchmove', touchHandler);
 

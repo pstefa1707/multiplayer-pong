@@ -1,4 +1,5 @@
 class Pong {
+	//Initialises canvas
 	constructor(username, player, opp_username, ball) {
 		$('body').css({ overflow: 'hidden', position: 'fixed' });
 		this.canvas = document.getElementById('drawing-canvas');
@@ -12,12 +13,14 @@ class Pong {
 		this.player_velocity = 3;
 	}
 
+	//Clears the canvas - ready for new frame
 	clear() {
 		this.ctx.fillStyle = 'black';
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
+	//Renders next frame onto canvas
 	update() {
 		this.clear();
 		this.ctx.font = '32px monospace';
@@ -83,6 +86,7 @@ class Pong {
 		);
 	}
 
+	//Keyboard Controls
 	up() {
 		if (this.game.self.pos > 10) this.game.self.pos -= 3;
 	}

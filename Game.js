@@ -16,6 +16,7 @@ class Game {
 		this.ball_velocity = [MIN_SPEED, 0];
 	}
 
+	//Updates game_state and calculates ball position and velocity
 	update() {
 		this.ball[0] += this.ball_velocity[0];
 		this.ball[1] += this.ball_velocity[1];
@@ -35,6 +36,7 @@ class Game {
 			this.ball[1] = 1;
 		}
 
+		//Ugly conditionals, but eh not familiar with javascript syntactically and it works
 		if (
 			this.ball[1] < this.players[this.player2].pos + 10 &&
 			this.ball[1] + 2 > this.players[this.player2].pos - 10 &&

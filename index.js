@@ -67,6 +67,7 @@ io.on('connection', socket => {
 		if (matchmaking.length != 0 && matchmaking[0] == socket.id) {
 			matchmaking = [];
 		}
+		//Removes user from current game and notifices other player - could use the game-id from player object but cbs
 		for (key in games) {
 			let game = games[key];
 			if (game.player1 == socket.id) {
@@ -80,6 +81,8 @@ io.on('connection', socket => {
 	});
 });
 
+//Very simple matchmaking, as soon as theres two people in queue it matches them together
+//theoretically there should never be more than two people in the queue at any one time.
 function matchMaker(new_player) {
 	if (matchmaking.length != 0) {
 		var game = new Game(
@@ -89,10 +92,14 @@ function matchMaker(new_player) {
 			users[new_player].username
 		);
 		games[game.id] = game;
+
+		//This is all completely un-needed but may be useful for future additions to the game
 		users[matchmaking[0]].game.id = game.id;
 		users[new_player].game.id = game.id;
 		users[matchmaking[0]].game.playing = true;
 		users[new_player].game.playing = true;
+
+		//Tells players that a game has started - allows client to initialise view
 		users[matchmaking[0]].socket.emit('game-started', {
 			username: users[matchmaking[0]].username,
 			player: 1,
@@ -111,6 +118,7 @@ function matchMaker(new_player) {
 	}
 }
 
+//Sends new game data to each of the respective players in each game, every x milliseconds
 setInterval(() => {
 	for (key in games) {
 		let game = games[key];
