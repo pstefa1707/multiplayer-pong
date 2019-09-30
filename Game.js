@@ -1,6 +1,7 @@
 const uuid = require('uuid');
 const MAX_SPEED = 4;
 const MIN_SPEED = 2;
+const MAX_SCORE = 10;
 
 class Game {
 	constructor(id, username, id2, username2) {

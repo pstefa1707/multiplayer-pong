@@ -45,6 +45,22 @@ h1 {
 	border-radius: 4px;
 }
 
+#set-username {
+	margin-top: 5px;
+	padding: 10px 20px;
+	border-radius: 20px;
+	background-color: black;
+	color: white;
+	border: 3px solid white;
+	transition-duration: 0.3s;
+}
+
+#set-username:hover {
+	cursor: pointer;
+	background-color: white;
+	color: black;
+}
+
 #match-making {
 	position: absolute;
 	text-align: center;
