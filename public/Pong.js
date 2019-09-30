@@ -1,5 +1,6 @@
 class Pong {
 	constructor(username, player, opp_username, ball) {
+		$('body').css({ overflow: 'hidden', position: 'fixed' });
 		this.canvas = document.getElementById('drawing-canvas');
 		this.ctx = document.getElementById('drawing-canvas').getContext('2d');
 		this.game = {
@@ -26,7 +27,7 @@ class Pong {
 			this.ctx.fillText(
 				`${this.game.self.username}: ${this.game.self.score}`,
 				this.canvas.width / 4,
-				25
+				50
 			);
 			this.ctx.fillRect(
 				0.05 * this.canvas.width,
@@ -38,7 +39,7 @@ class Pong {
 			this.ctx.fillText(
 				`${this.game.opp.username}: ${this.game.opp.score}`,
 				3 * (this.canvas.width / 4),
-				25
+				50
 			);
 			this.ctx.fillRect(
 				0.95 * this.canvas.width,
@@ -51,7 +52,7 @@ class Pong {
 			this.ctx.fillText(
 				`${this.game.opp.username}: ${this.game.opp.score}`,
 				this.canvas.width / 4,
-				25
+				50
 			);
 			this.ctx.fillRect(
 				0.05 * this.canvas.width,
@@ -64,7 +65,7 @@ class Pong {
 			this.ctx.fillText(
 				`${this.game.self.username}: ${this.game.self.score}`,
 				3 * (this.canvas.width / 4),
-				25
+				50
 			);
 			this.ctx.fillRect(
 				0.95 * this.canvas.width,

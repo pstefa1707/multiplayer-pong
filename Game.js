@@ -1,4 +1,6 @@
 const uuid = require('uuid');
+const MAX_SPEED = 4;
+const MIN_SPEED = 2;
 
 class Game {
 	constructor(id, username, id2, username2) {
@@ -36,22 +38,23 @@ class Game {
 			this.ball[1] < this.players[this.player2].pos + 10 &&
 			this.ball[1] + 2 > this.players[this.player2].pos - 10 &&
 			this.ball[0] > 94 &&
-			this.ball[0] < 96.5
+			this.ball[0] < 98
 		) {
 			this.ball[0] = 94;
 			var relativeIntersectY =
 				this.players[this.player2].pos - this.ball[1] - 1;
 			var normalizedRelativeIntersectionY = relativeIntersectY / 10;
 			this.ball_velocity[0] = -(
-				(1 - Math.abs(normalizedRelativeIntersectionY)) * (2.5 - 1.25) +
-				1.25
+				(1 - Math.abs(normalizedRelativeIntersectionY)) *
+					(MAX_SPEED - MIN_SPEED) +
+				MIN_SPEED
 			);
 			this.ball_velocity[1] = -normalizedRelativeIntersectionY;
 		} else if (
 			this.ball[1] < this.players[this.player1].pos + 10 &&
 			this.ball[1] + 2 > this.players[this.player1].pos - 10 &&
 			this.ball[0] < 6 &&
-			this.ball[0] > 3.5
+			this.ball[0] > 2
 		) {
 			this.ball[0] = 6;
 			var relativeIntersectY =
@@ -59,18 +62,20 @@ class Game {
 			var normalizedRelativeIntersectionY = relativeIntersectY / 10;
 			var normalizedRelativeIntersectionY = relativeIntersectY / 10;
 			this.ball_velocity[0] =
-				(1 - Math.abs(normalizedRelativeIntersectionY)) * (2.5 - 1.25) +
-				1.25;
+				(1 - Math.abs(normalizedRelativeIntersectionY)) *
+					(MAX_SPEED - MIN_SPEED) +
+				MIN_SPEED;
 			this.ball_velocity[1] = -normalizedRelativeIntersectionY;
 		}
 	}
 
 	reset(player) {
-		this.ball = [50, 50];
 		if (player == 1) {
-			this.ball_velocity = [-0.7, 0];
+			this.ball = [80, 50];
+			this.ball_velocity = [MIN_SPEED, 0];
 		} else {
-			this.ball_velocity = [0.7, 0];
+			this.ball = [20, 50];
+			this.ball_velocity = [MIN_SPEED, 0];
 		}
 	}
 }

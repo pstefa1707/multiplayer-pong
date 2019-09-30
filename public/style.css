@@ -5,6 +5,7 @@ body {
 	color: white;
 	font-family: 'Courier New', Courier, monospace;
 	touch-action: none;
+	width: 100%;
 }
 
 h1 {
@@ -65,7 +66,7 @@ h1 {
 
 @media (pointer: none), (pointer: coarse) {
 	#gameplay {
-		height: 79vh;
+		height: 75vh;
 	}
 }
 
