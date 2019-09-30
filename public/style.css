@@ -1,8 +1,10 @@
 body {
+	overflow: hidden;
 	margin: 0;
 	background: black;
 	color: white;
 	font-family: 'Courier New', Courier, monospace;
+	touch-action: none;
 }
 
 h1 {
@@ -61,7 +63,14 @@ h1 {
 	width: 100%;
 }
 
+@media (pointer: none), (pointer: coarse) {
+	#gameplay {
+		height: 79vh;
+	}
+}
+
 #drawing-canvas {
+	touch-action: none;
 	border: 5px white solid;
 	cursor: none;
 }

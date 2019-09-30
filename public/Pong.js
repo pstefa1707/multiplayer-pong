@@ -19,7 +19,7 @@ class Pong {
 
 	update() {
 		this.clear();
-		this.ctx.font = '32px Arial';
+		this.ctx.font = '32px monospace';
 		this.ctx.textAlign = 'center';
 		if (this.game.player == 1) {
 			this.ctx.fillStyle = '#0000ff';
@@ -77,8 +77,8 @@ class Pong {
 		this.ctx.fillRect(
 			(this.game.ball[0] / 100) * this.canvas.width,
 			(this.game.ball[1] / 100) * this.canvas.height,
-			10,
-			10
+			0.02 * this.canvas.height,
+			0.02 * this.canvas.height
 		);
 	}
 

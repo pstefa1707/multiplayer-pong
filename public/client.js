@@ -107,3 +107,18 @@ function getMousePos(evt) {
 		y: evt.clientY - rect.top
 	};
 }
+
+//Phone
+document.addEventListener('touchstart', touchHandler);
+document.addEventListener('touchmove', touchHandler);
+
+function touchHandler(e) {
+	if (e.touches) {
+		let playerY =
+			e.touches[0].pageY -
+			document.getElementById('drawing-canvas').offsetTop;
+		game_state.game.self.pos =
+			(playerY / document.getElementById('drawing-canvas').height) * 100;
+		e.preventDefault();
+	}
+}
