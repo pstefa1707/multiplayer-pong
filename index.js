@@ -114,6 +114,7 @@ function matchMaker(new_player) {
 setInterval(() => {
 	for (key in games) {
 		let game = games[key];
+
 		game.update();
 		data = {
 			1: {

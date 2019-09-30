@@ -73,10 +73,10 @@ class Game {
 	reset(player) {
 		if (player == 1) {
 			this.ball = [80, 50];
-			this.ball_velocity = [MIN_SPEED, 0];
+			this.ball_velocity = [-(MIN_SPEED - 0.5), 0];
 		} else {
 			this.ball = [20, 50];
-			this.ball_velocity = [MIN_SPEED, 0];
+			this.ball_velocity = [MIN_SPEED - 0.5, 0];
 		}
 	}
 }
