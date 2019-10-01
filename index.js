@@ -7,6 +7,7 @@ var server = require('http')
 	.createServer(app)
 	.listen(port);
 var io = require('socket.io')(server);
+const uNRegex = new RegExp('^[a-zA-Z0-9_.-]{3,}$');
 
 app.use(express.static(__dirname + '/node_modules'));
 app.use(express.static(__dirname + '/public'));
@@ -37,6 +38,11 @@ io.on('connection', socket => {
 	//Checks for duplicate usernames
 	socket.on('set-username', (username, callback) => {
 		let same_username = false;
+		console.log(uNRegex.test(username));
+		if (!uNRegex.test(username)) {
+			callback(false);
+			same_username = true;
+		}
 		for (var key in users) {
 			var user = users[key];
 			if (user.username == username) {
@@ -54,7 +60,7 @@ io.on('connection', socket => {
 			matchMaker(socket.id);
 		} else {
 			console.log(
-				`${users[socket.id].username} tried to set their username to ${username}, however username is already in use.`
+				`${users[socket.id].username} tried to set their username to ${username}, however username is in use or invalid.`
 			);
 		}
 	});

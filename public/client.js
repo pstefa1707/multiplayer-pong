@@ -68,7 +68,9 @@ function setUsername() {
 				document.getElementById('start-screen').remove();
 				console.log('username changed successfully');
 			} else {
-				console.log('error with username!');
+				window.alert(
+					'Username invalid, must be more than 3 characters in length, no spaces and unique.'
+				);
 			}
 		}
 	);
