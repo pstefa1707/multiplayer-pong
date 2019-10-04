@@ -69,7 +69,7 @@ function setUsername() {
 				console.log('username changed successfully');
 			} else {
 				window.alert(
-					'Username invalid, must be more than 3 characters in length, no spaces and unique.'
+					'Username invalid, must be more than 3 characters in length, no spaces and unique. (^[a-zA-Z0-9_.-]{3,}$)'
 				);
 			}
 		}
