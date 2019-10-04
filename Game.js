@@ -1,5 +1,5 @@
 const uuid = require('uuid');
-const MAX_SPEED = 4;
+const MAX_SPEED = 5;
 const MIN_SPEED = 2;
 const MAX_SCORE = 10;
 
@@ -74,11 +74,11 @@ class Game {
 
 	reset(player) {
 		if (player == 1) {
-			this.ball = [80, 50];
-			this.ball_velocity = [-(MIN_SPEED - 0.5), 0];
+			this.ball = [60, 50];
+			this.ball_velocity = [-(MIN_SPEED - 1), 0];
 		} else {
-			this.ball = [20, 50];
-			this.ball_velocity = [MIN_SPEED - 0.5, 0];
+			this.ball = [40, 50];
+			this.ball_velocity = [MIN_SPEED - 1, 0];
 		}
 	}
 }
