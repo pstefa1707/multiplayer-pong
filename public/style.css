@@ -18,8 +18,14 @@ h1 {
 #online-players {
 	right: 10px;
 }
+#ping {
+	font-size: 15px;
+	top: 30px;
+	left: 10px;
+}
 
 #github-link {
+	font-size: 15px;
 	color: white;
 	left: 10px;
 }

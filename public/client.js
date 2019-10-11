@@ -13,6 +13,15 @@ let interval = setInterval(() => {
 	if (i == '.....') i = '';
 }, 500);
 
+//Control Ping
+let ping_interval = setInterval(() => {
+	let time = Date.now();
+	socket.emit('get-ping', callback => {
+		document.getElementById('ping').innerHTML = `Ping: ${Date.now() -
+			time}ms`;
+	});
+}, 500);
+
 //Gets number of online players
 socket.on('player-broadcast', players => {
 	document.getElementById('online-players').innerHTML = `Online: ${players}`;

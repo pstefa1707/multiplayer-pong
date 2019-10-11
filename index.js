@@ -65,6 +65,10 @@ io.on('connection', socket => {
 		}
 	});
 
+	socket.on('get-ping', callback => {
+		callback(true);
+	});
+
 	//Disconnects user
 	socket.on('disconnect', () => {
 		console.log(`Client Disconnected: ${users[socket.id].username}`);
