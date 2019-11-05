@@ -1,52 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
-		/>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-	</head>
-	<body>
-		<h1>Pong</h1>
-		<h2 id="online-players">Online: 0</h2>
-		<h2 id="ping">Ping: 0ms</h2>
-		<h2 id="github-link">
-			<a href="https://github.com/pstefa1707/multiplayer-pong"
-				>pstefa1707</a
-			>
-		</h2>
-		<div id="start-screen">
-			<form onsubmit="event.preventDefault(); setUsername();">
-				Username:
-				<input
-					id="input-username"
-					type="text"
-					name="username"
-					value=""
-				/>
-				<br />
-				<input
-					id="set-username"
-					type="submit"
-					value="Search for Match"
-				/>
-			</form>
-		</div>
-		<div id="match-making" style="display: none;">
-			<h3 id="searching-for-match">Searching for Match...</h3>
-		</div>
-		<div id="gameplay" style="display: none;" onresize="fit_canvas();">
-			<canvas id="drawing-canvas" width="600" height="500"></canvas>
-		</div>
-	</body>
-	<script src="/jquery/dist/jquery.js"></script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="Pong.js"></script>
-	<script src="client.js"></script>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0" />
+	<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+	<h1>Pong</h1>
+	<h2 id="online-players">Online: 0</h2>
+	<h2 id="ping">Ping: 0ms</h2>
+	<h2 id="github-link">
+		<a href="https://github.com/pstefa1707/multiplayer-pong">pstefa1707</a>
+	</h2>
+	<div id="start-screen">
+		Username:
+		<input id="input-username" type="text" name="username" value="" />
+		<br />
+		<input class="menu-button" id="set-username" onclick="setUsername();" type="submit"
+			value="Search for Match Online" />
+		<br />
+		<input class="menu-button" id="singleplayer" onclick="singlePlayer();" type="submit" value="Verse CPU" />
+		<input class="menu-button" id="1v1" onclick="oneVerseOne();" type="submit" value="Verse Local Player" />
+
+	</div>
+	<div id="match-making" style="display: none;">
+		<h3 id="searching-for-match">Searching for Match...</h3>
+	</div>
+	<div id="gameplay" style="display: none;" onresize="fit_canvas();">
+		<canvas id="drawing-canvas" width="600" height="500"></canvas>
+	</div>
+</body>
+<script src="/jquery/dist/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="StaticGame.js"></script>
+<script src="Pong.js"></script>
+<script src="client.js"></script>
+
 </html>

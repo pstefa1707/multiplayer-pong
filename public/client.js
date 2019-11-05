@@ -85,26 +85,108 @@ function setUsername() {
 	);
 }
 
+//Single Player vs CPU
+function singlePlayer() {
+	//Controls
+	//Keyboard
+	let KEYMAP = {};
+	KEYMAP[87] = false;
+	KEYMAP[83] = false;
+	KEYMAP[38] = false;
+	KEYMAP[40] = false;
+	document.addEventListener('keydown', function (event) {
+		KEYMAP[event.keyCode] = true;
+	});
+	document.addEventListener('keyup', function (event) {
+		KEYMAP[event.keyCode] = false;
+	});
+	game = new Game(
+		0,
+		2,
+		1,
+		4
+	)
+	game_state = new Pong(
+		"Player One",
+		1,
+		"Player Two",
+		[50, 50]
+	);
+	clearInterval(interval);
+	interval = setInterval(() => {
+		if (KEYMAP[87] || KEYMAP[38]) game_state.upSelf();
+		if (KEYMAP[83] || KEYMAP[40]) game_state.downSelf();
+		game_state.update();
+		game.update();
+		game_state.game.self.score = game.players[0].score;
+		game.players[0].pos = game_state.game.self.pos
+		game_state.game.opp.score = game.players[1].score;
+		game.players[1].pos = game_state.game.opp.pos
+		game_state.game.ball = game.ball;
+		if (game_state.game.opp.pos < game_state.game.ball[1]) game_state.game.opp.pos += 0.65;
+		if (game_state.game.opp.pos > game_state.game.ball[1]) game_state.game.opp.pos -= 0.65;
+	}, (1 / 60) * 1000);
+
+	document.getElementById('match-making').remove();
+	document.getElementById('gameplay').style.display = 'flex';
+	fit_canvas();
+}
+
+//Two Player 1v1
+function oneVerseOne() {
+	//Controls
+	//Keyboard
+	let KEYMAP = {};
+	KEYMAP[87] = false;
+	KEYMAP[83] = false;
+	KEYMAP[38] = false;
+	KEYMAP[40] = false;
+	document.addEventListener('keydown', function (event) {
+		KEYMAP[event.keyCode] = true;
+	});
+	document.addEventListener('keyup', function (event) {
+		KEYMAP[event.keyCode] = false;
+	});
+	game = new Game(
+		0,
+		2,
+		1,
+		4
+	)
+	game_state = new Pong(
+		"Player One",
+		1,
+		"Player Two",
+		[50, 50]
+	);
+	clearInterval(interval);
+	interval = setInterval(() => {
+		if (KEYMAP[87]) game_state.upSelf();
+		if (KEYMAP[83]) game_state.downSelf();
+		if (KEYMAP[38]) game_state.upOpp();
+		if (KEYMAP[40]) game_state.downOpp();
+		game_state.update();
+		game.update();
+		game_state.game.self.score = game.players[0].score;
+		game.players[0].pos = game_state.game.self.pos
+		game_state.game.opp.score = game.players[1].score;
+		game.players[1].pos = game_state.game.opp.pos
+		game_state.game.ball = game.ball;
+	}, (1 / 60) * 1000);
+
+	document.getElementById('match-making').remove();
+	document.getElementById('gameplay').style.display = 'flex';
+	fit_canvas();
+}
+
 //Handles opponent leaving game
 socket.on('player-left', () => {
 	socket.disconnect();
 	document.location.reload();
 });
 
-//Controls
-//Keyboard
-document.addEventListener('keydown', function(event) {
-	if (game_state != null) {
-		if (event.keyCode == 38 || event.keyCode == 87) {
-			game_state.up();
-		} else if (event.keyCode == 40 || event.keyCode == 83) {
-			game_state.down();
-		}
-	}
-});
-
 //Mouse
-$('#drawing-canvas').mousemove(function(e) {
+$('#drawing-canvas').mousemove(function (e) {
 	let mouse_pos = getMousePos(e);
 	game_state.game.self.pos =
 		(mouse_pos.y / document.getElementById('drawing-canvas').height) * 100;

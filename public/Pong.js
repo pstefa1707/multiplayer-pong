@@ -1,7 +1,7 @@
 class Pong {
 	//Initialises canvas
-	constructor(username, player, opp_username, ball) {
-		$('body').css({ overflow: 'hidden', position: 'fixed' });
+	constructor(username, player, opp_username, ball, status) {
+		//$('body').css({ overflow: 'hidden', position: 'fixed' });
 		this.canvas = document.getElementById('drawing-canvas');
 		this.ctx = document.getElementById('drawing-canvas').getContext('2d');
 		this.game = {
@@ -87,11 +87,19 @@ class Pong {
 	}
 
 	//Keyboard Controls
-	up() {
+	upSelf() {
 		if (this.game.self.pos > 10) this.game.self.pos -= 3;
 	}
 
-	down() {
+	downSelf() {
 		if (this.game.self.pos < 90) this.game.self.pos += 3;
+	}
+
+	upOpp() {
+		if (this.game.opp.pos > 10) this.game.opp.pos -= 3;
+	}
+
+	downOpp() {
+		if (this.game.opp.pos < 90) this.game.opp.pos += 3;
 	}
 }

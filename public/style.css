@@ -58,14 +58,15 @@ h2 {
 	color: white;
 	text-align: center;
 	font-size: 32px;
-	width: 400px;
+	width: 460px;
 	padding: 10px 15px;
 	border-radius: 4px;
 }
 
-#set-username {
+.menu-button {
 	margin-top: 5px;
 	padding: 10px 20px;
+	width:500px;
 	border-radius: 20px;
 	background-color: black;
 	color: white;
@@ -73,7 +74,7 @@ h2 {
 	transition-duration: 0.3s;
 }
 
-#set-username:hover {
+.menu-button:hover {
 	cursor: pointer;
 	background-color: white;
 	color: black;
